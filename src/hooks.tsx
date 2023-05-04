@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { API_PATH } from "./api";
-import { Columns, IData } from "./types";
+import { Columns, IState, IDATA } from "./types";
 import { requestAPI } from "./utils";
 import moment from "moment";
 
@@ -25,20 +25,20 @@ export const useColumns = (): Columns => {
         title: "Price",
         dataIndex: "price",
         key: "price",
-        sorter: (a: any, b: any) => Number(a.price) - Number(b.price),
+        sorter: (a: IDATA, b: IDATA) => Number(a.price) - Number(b.price),
       },
       {
         title: "Quantity",
         dataIndex: "qty",
         key: "qty",
-        sorter: (a: any, b: any) => Number(a.qty) - Number(b.qty),
+        sorter: (a: IDATA, b: IDATA) => Number(a.qty) - Number(b.qty),
       },
       {
         title: "Time",
         dataIndex: "time",
         key: "time",
         sorter: (a: any, b: any) => a.time - b.time,
-        render: (time: any) => (
+        render: (time: number) => (
           <span>{moment(time).format("YYYY-MM-DD HH:mm:ss")}</span>
         ),
       },
@@ -53,13 +53,13 @@ export const useColumns = (): Columns => {
  * @returns loading, dataSource, fetchDataSource
  */
 const INIT = {
-  tiker24h: {},
+  tiker24h: { priceChange: "", priceChangePercent: "" },
   ticker: "",
   dataList: [],
 };
-export const useDataList = () => {
+export const useDataSource = () => {
   const [loading, setLoading] = useState(false);
-  const [dataSource, setDataSource] = useState<IData>(INIT);
+  const [dataSource, setDataSource] = useState<IState>(INIT);
 
   const fetchDataSource = useCallback(async (symbol: string) => {
     try {

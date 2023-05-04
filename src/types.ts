@@ -6,6 +6,13 @@ export interface IColumn {
   render?: any;
 }
 
+export interface IDATA {
+  id: string;
+  price: string;
+  qty: string;
+  time: number;
+}
+
 export type Columns = Array<IColumn>;
 
 export interface ITicker24 {
@@ -13,7 +20,7 @@ export interface ITicker24 {
   priceChange: string;
 }
 
-export interface IData {
+export interface IState {
   tiker24h: Partial<ITicker24>;
   ticker: string;
   dataList: Array<string>;

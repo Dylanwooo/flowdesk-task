@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, renderHook, fireEvent } from "@testing-library/react";
-import { useDataList } from "./hooks";
+import { useDataSource } from "./hooks";
 import App from "./App";
 import { act } from "react-dom/test-utils";
 
@@ -12,7 +12,7 @@ describe("Market data", () => {
 
   it("should use the hooks correctly", () => {
     render(<App />);
-    const { result } = renderHook(() => useDataList());
+    const { result } = renderHook(() => useDataSource());
 
     expect(result.current.loading).toBeFalsy();
 

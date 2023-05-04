@@ -1,4 +1,4 @@
-import { useSymbolsList, useDataList, useColumns } from "./hooks";
+import { useSymbolsList, useDataSource, useColumns } from "./hooks";
 import { Select, Table, Button } from "antd";
 import { formatNumber } from "./utils";
 import { FieldWrapper, Container } from "./styles";
@@ -8,7 +8,7 @@ const { Option } = Select;
 function App() {
   const symbols = useSymbolsList();
   const columns = useColumns();
-  const { reset, loading, dataSource, fetchDataSource } = useDataList();
+  const { reset, loading, dataSource, fetchDataSource } = useDataSource();
   const { dataList, tiker24h, ticker } = dataSource;
   const { priceChange, priceChangePercent } = tiker24h;
 
