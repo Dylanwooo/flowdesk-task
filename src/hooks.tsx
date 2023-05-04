@@ -52,8 +52,9 @@ export const useColumns = (): Columns => {
  * Data fetching managment hook
  * @returns loading, dataSource, fetchDataSource
  */
+const INIT_TICKER_24H = { priceChange: "", priceChangePercent: "" };
 const INIT = {
-  tiker24h: { priceChange: "", priceChangePercent: "" },
+  tiker24h: INIT_TICKER_24H,
   ticker: "",
   dataList: [],
 };
@@ -76,11 +77,11 @@ export const useDataSource = () => {
           symbol,
         }),
       ]);
-
+      // In case the promise.all return `null` for either async function
       setDataSource({
-        tiker24h,
-        ticker,
-        dataList,
+        tiker24h: tiker24h ? tiker24h : INIT_TICKER_24H,
+        ticker: ticker ? ticker : "",
+        dataList: dataList ? dataList : [],
       });
     } catch (e) {
       // some error handlers
