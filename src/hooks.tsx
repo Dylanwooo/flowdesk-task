@@ -52,13 +52,14 @@ export const useColumns = (): Columns => {
  * Data fetching managment hook
  * @returns loading, dataSource, fetchDataSource
  */
+const INIT = {
+  tiker24h: {},
+  ticker: "",
+  dataList: [],
+};
 export const useDataList = () => {
   const [loading, setLoading] = useState(false);
-  const [dataSource, setDataSource] = useState<IData>({
-    tiker24h: {},
-    ticker: "",
-    dataList: [],
-  });
+  const [dataSource, setDataSource] = useState<IData>(INIT);
 
   const fetchDataSource = useCallback(async (symbol: string) => {
     try {
@@ -89,9 +90,13 @@ export const useDataList = () => {
     }
   }, []);
 
+  const reset = useCallback(() => {
+    setDataSource(INIT);
+  }, []);
+
   useEffect(() => {
     // Some initial setup
   }, []);
 
-  return { loading, dataSource, fetchDataSource };
+  return { reset, loading, dataSource, fetchDataSource };
 };

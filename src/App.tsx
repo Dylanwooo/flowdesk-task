@@ -1,5 +1,5 @@
 import { useSymbolsList, useDataList, useColumns } from "./hooks";
-import { Select, Table } from "antd";
+import { Select, Table, Button } from "antd";
 import { formatNumber } from "./utils";
 import { FieldWrapper, Container } from "./styles";
 
@@ -8,7 +8,7 @@ const { Option } = Select;
 function App() {
   const symbols = useSymbolsList();
   const columns = useColumns();
-  const { loading, dataSource, fetchDataSource } = useDataList();
+  const { reset, loading, dataSource, fetchDataSource } = useDataList();
   const { dataList, tiker24h, ticker } = dataSource;
   const { priceChange, priceChangePercent } = tiker24h;
 
@@ -26,12 +26,13 @@ function App() {
             <Option key={sym}>{sym}</Option>
           ))}
         </Select>
+        <Button onClick={reset}>Clear all</Button>
       </FieldWrapper>
       {ticker && (
-        <FieldWrapper>Current Price: {formatNumber(ticker)}</FieldWrapper>
+        <FieldWrapper>Current Price: ${formatNumber(ticker)}</FieldWrapper>
       )}
       {priceChange && (
-        <FieldWrapper>24H Price: {formatNumber(priceChange)}</FieldWrapper>
+        <FieldWrapper>24H Price: ${formatNumber(priceChange)}</FieldWrapper>
       )}
       {priceChangePercent && (
         <FieldWrapper>24H Change: {priceChangePercent + "%"}</FieldWrapper>
