@@ -1,9 +1,28 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import React from "react";
+import { render, screen, renderHook, fireEvent } from "@testing-library/react";
+import { useDataList } from "./hooks";
+import App from "./App";
+import { act } from "react-dom/test-utils";
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe("Market data", () => {
+  it("renders the title correctly", () => {
+    render(<App />);
+    expect(screen.getByText("Public market data")).toBeInTheDocument();
+  });
+
+  it("should use the hooks correctly", () => {
+    render(<App />);
+    const { result } = renderHook(() => useDataList());
+
+    expect(result.current.loading).toBeFalsy();
+
+    act(() => result.current.fetchDataSource("BTCUSDT"));
+
+    // expect the data list should be rendered
+    expect(
+      document.getElementsByClassName("ant-table-tbody")[0].childElementCount
+    ).toBeGreaterThan(0);
+
+    expect(screen.getByText(/Price/i)).toBeInTheDocument();
+  });
 });
